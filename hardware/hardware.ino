@@ -5,12 +5,19 @@
 BLEPeripheral blePeripheral;       // BLE Peripheral Device (the board you're programming)
 BLEService doorService("9c856326-4517-407e-a661-faba175acdfe");
 
-BLECharacteristic doorChar(
-  "6f9af486-ee00-43ac-8df6-897e05af1aa6",  // standard 16-bit characteristic UUID
-  BLERead | BLENotify, 17);  // remote clients will be able to get notifications if this characteristic changes
-                             // the characteristic is 2 bytes long as the first field needs to be "Flags" as per BLE specifications
-                             // https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-
+BLEIntCharacteristic potChar(
+  "6f9af486-ee00-43ac-8df6-897e05af1aa6",
+  BLERead | BLENotify);
+BLEIntCharacteristic xChar(
+  "7c38e88a-2724-4aae-96eb-78857589fa3c",
+  BLERead | BLENotify);
+BLEIntCharacteristic yChar(
+  "301d6851-ce6d-4fca-9a43-ffe6535b2715",
+  BLERead | BLENotify);
+BLEIntCharacteristic zChar(
+  "fe1088ce-68ca-4a4d-ae91-797d046db6e7",
+  BLERead | BLENotify);
+  
 void setup()
 {
   pinMode(13, OUTPUT);
@@ -19,7 +26,10 @@ void setup()
   blePeripheral.setLocalName("DoorSensor");
   blePeripheral.setAdvertisedServiceUuid(doorService.uuid());  // add the service UUID
   blePeripheral.addAttribute(doorService);   // Add the BLE door sensor service
-  blePeripheral.addAttribute(doorChar); // add the door sensor characteristic
+  blePeripheral.addAttribute(potChar);
+  blePeripheral.addAttribute(xChar);
+  blePeripheral.addAttribute(yChar);
+  blePeripheral.addAttribute(zChar);
 
   /* Now activate the BLE device.  It will start continuously transmitting BLE
      advertising packets and will be visible to remote BLE central devices
@@ -69,16 +79,14 @@ void loop() {
 
 void updateSensors() {
     int x, y, z;
-    unsigned char output[17];
-    memset(output, 0, sizeof(output));
+    int val;
     
-    int val = analogRead(0); // pot. attached to ADC0
-    CurieIMU.readAccelerometer(x,y,z);
-  
-    write_int_to_array((uint32_t)val, &output[1]);
-    write_int_to_array((uint32_t)x, &output[5]);
-    write_int_to_array((uint32_t)y, &output[9]);
-    write_int_to_array((uint32_t)z, &output[13]);
-    doorChar.setValue(output, 17);
+    val = analogRead(0); // pot. attached to ADC0
+    CurieIMU.readAccelerometer(x, y, z);
+      
+    potChar.setValue(val);
+    xChar.setValue(x);
+    yChar.setValue(y);
+    zChar.setValue(z);
 }
 
