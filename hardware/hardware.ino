@@ -38,7 +38,7 @@ void loop()
   
   while (central && central.connected()) {
     int x, y, z;
-    unsigned char output[16];
+    unsigned char output[17];
     memset(output, 0, sizeof(output));
     
     int val = analogRead(0); // pot. attached to ADC0
@@ -48,7 +48,7 @@ void loop()
     write_int_to_array((uint32_t)x, &output[5]);
     write_int_to_array((uint32_t)y, &output[9]);
     write_int_to_array((uint32_t)z, &output[13]);
-    doorChar.setValue(output, 16);
+    doorChar.setValue(output, 17);
     delay(50);
   }
 }
