@@ -1,4 +1,4 @@
-package com.flaviutamas.hackgsu_fall2017;
+package com.flaviutamas.dataprocessor;
 
 import org.junit.Test;
 

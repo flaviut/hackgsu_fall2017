@@ -1,4 +1,4 @@
-package com.flaviutamas.hackgsu_fall2017;
+package com.flaviutamas.dataprocessor;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.flaviutamas.hackgsu_fall2017", appContext.getPackageName());
+        assertEquals("com.flaviutamas.dataprocessor", appContext.getPackageName());
     }
 }

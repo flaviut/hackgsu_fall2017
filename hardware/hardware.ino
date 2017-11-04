@@ -42,7 +42,7 @@ void setup()
   blePeripheral.begin();
 }
 
-long previousMillis = 0;  // last time the heart rate was checked, in ms
+long previousMillis = 0; // last time work was done.
 
 void loop() {
   // listen for BLE peripherals to connect:
