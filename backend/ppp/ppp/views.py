@@ -37,13 +37,25 @@ def show_db_column():
     for row in rows:
         list.append(tuple(row))
     return json.dumps(list)
+@app.route('/getmax')
+def get_max():
+    con = sql.connect('test.db')
+    c = con.cursor()
+    c.execute('SELECT max(id) from Toilets')
+    num = c.fetchall()
+    num2 = num[0][0]
+    return str(num2)
 @app.route('/addinfo')
 def add_info():
     con = sql.connect('test.db')
     with con:
         c = con.cursor()
-        for num in myToilets['toilets']:
-            c.execute('INSERT INTO Toilets (timestamp, action) VALUES (?,?)', (num['timestamp'], num['action']))
+        c.execute('SELECT max(id) from Toilets')
+        num = c.fetchall()
+        num2 = num[0][0]
+        if (num2 < 7):
+            for num in myToilets['toilets']:
+                c.execute('INSERT INTO Toilets (timestamp, action) VALUES (?,?)', (num['timestamp'], num['action']))
     return "Data inserted"
 @app.route('/json')
 def index():
