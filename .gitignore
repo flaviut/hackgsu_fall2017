@@ -349,19 +349,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.xhtml
-
 ### Windows ###
 # Windows thumbnail cache files
 ehthumbs_vista.db

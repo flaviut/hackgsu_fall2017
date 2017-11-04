@@ -30,6 +30,10 @@ void setup()
   blePeripheral.addAttribute(xChar);
   blePeripheral.addAttribute(yChar);
   blePeripheral.addAttribute(zChar);
+  potChar.setValue(0);
+  xChar.setValue(0);
+  yChar.setValue(0);
+  zChar.setValue(0);
 
   /* Now activate the BLE device.  It will start continuously transmitting BLE
      advertising packets and will be visible to remote BLE central devices
@@ -38,14 +42,6 @@ void setup()
   blePeripheral.begin();
 }
 
-void write_int_to_array(uint32_t v, unsigned char target[]) {
-  target[0] = v >> 24 & 0xFF;
-  target[1] = v >> 16 & 0xFF;
-  target[2] = v >>  8 & 0xFF;
-  target[3] = v >>  0 & 0xFF;
-}
-
-int oldHeartRate = 0;  // last heart rate reading from analog input
 long previousMillis = 0;  // last time the heart rate was checked, in ms
 
 void loop() {
@@ -67,6 +63,7 @@ void loop() {
       // if 200ms have passed, check the heart rate measurement:
       if (currentMillis - previousMillis >= 50) {
         previousMillis = currentMillis;
+        Serial.println("updating sensors");
         updateSensors();
       }
     }
