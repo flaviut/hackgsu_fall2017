@@ -1,4 +1,4 @@
-from app import app
+from ppp import app
 
 import json
 import sqlite3 as sql
@@ -9,10 +9,10 @@ student = {"101":{"class":'V', "Name":'Rohit',  "Roll_no":7},
            "103":{"class":'V', "Name":'Samiya', "Roll_no":12}}
 
 #json thing
-toilets = {{"id": 1,"timestamp": "...","action": "open"},
-		   {"id": 2,"timestamp": "...","action": "closed"},
-		   {"id": 3,"timestamp": "...","action": "closed"},
-		   {"id": 4,"timestamp": "...","action": "open"}}
+# toilets = {{"id": 1,"timestamp": "...","action": "open"},
+# 		   {"id": 2,"timestamp": "...","action": "closed"},
+# 		   {"id": 3,"timestamp": "...","action": "closed"},
+# 		   {"id": 4,"timestamp": "...","action": "open"}}
 
 @app.route('/toilets')
 def toilet_info():
