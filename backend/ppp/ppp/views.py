@@ -4,20 +4,13 @@ import json
 import sqlite3 as sql
 
 #json thing
-myToilets = {"toilets":[{"id": "1", "toiletId": "1", "timestamp": "2017-11-01T11:40:20+00:00
-", "action": "closed"},
-                      {"id": "2", "toiletId": "2", "timestamp": "2017-11-01T10:35:22+00:00
-", "action": "closed"},
-                        {"id": "3", "toiletId": "3", "timestamp": "2017-11-01T07:41:16+00:00
-", "action": "open"},
-                      {"id": "4", "toiletId": "4", "timestamp": "2017-11-01T03:31:51+00:00
-", "action": "open"},
-                      {"id": "5", "toiletId": "5", "timestamp": "2017-11-01T11:02:45+00:00
-", "action": "closed"},
-                      {"id": "6", "toiletId": "6", "timestamp": "2017-11-02T15:04:36+00:00
-", "action": "open"},
-                        {"id": "7", "toiletId": "7", "timestamp": "2017-11-02T17:06:36+00:00
-", "action": "closed"}]}
+myToilets = {"toilets":[{"id": "1", "toiletId": "1", "timestamp": "2017-11-01T11:40:20+00:00", "action": "closed"},
+                      {"id": "2", "toiletId": "2", "timestamp": "2017-11-01T10:35:22+00:00", "action": "closed"},
+                        {"id": "3", "toiletId": "3", "timestamp": "2017-11-01T07:41:16+00:00", "action": "open"},
+                      {"id": "4", "toiletId": "4", "timestamp": "2017-11-01T03:31:51+00:00", "action": "open"},
+                      {"id": "5", "toiletId": "5", "timestamp": "2017-11-01T11:02:45+00:00", "action": "closed"},
+                      {"id": "6", "toiletId": "6", "timestamp": "2017-11-02T15:04:36+00:00", "action": "open"},
+                        {"id": "7", "toiletId": "7", "timestamp": "2017-11-02T17:06:36+00:00", "action": "closed"}]}
 
 @app.route('/what')
 def wha_t():
