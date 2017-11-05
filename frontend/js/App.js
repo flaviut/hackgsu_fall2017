@@ -45,7 +45,7 @@ class App extends React.Component {
         return;
       }
 
-      if(previousValue[3] === 'close' && val[3] === 'close') {
+      if(previousValue[3] === 'closed' && val[3] === 'closed') {
         // two closes in a row with no lock in the middle? there's an issue.
         abortedShits += 1;
       }
@@ -64,7 +64,7 @@ class App extends React.Component {
                      key={id} />));
     }
 
-    return (<div>
+    return (<div className="container">
       <h2 id="heading">Porta-Potty Statuses</h2>
       <ToiletEntries>
         {entries}

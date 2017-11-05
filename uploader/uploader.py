@@ -13,7 +13,7 @@ previous_jerk = None
 
 current_lock_state = None
 
-current_toilet = 1
+current_toilet = 2
 
 client = HttpClientThread()
 client.start()
