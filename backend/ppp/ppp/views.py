@@ -82,11 +82,10 @@ def index():
         if len(values) < 8:
             rows = c.execute("""
                 SELECT * FROM Toilets WHERE toiletId = ?
-                ORDER BY ts""", toiletId).fetchall()
+                ORDER BY ts""", (toiletId,)).fetchall()
             results[toiletId] = []
             for row in rows:
                 results[row[1]].append(tuple(row))
-
 
     return json.dumps(results)
 
