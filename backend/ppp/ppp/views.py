@@ -46,3 +46,7 @@ def add_info():
 @app.route('/load')
 def index():
    return json.dumps(myToilets)
+@app.after_request
+def apply_cors(response):
+	response.headers["Access-Control-Allow-Origin"] = "*"
+	return response
