@@ -368,4 +368,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Our specific Hackathon needs
+.vscode/
+*.db
+
 # End of https://www.gitignore.io/api/web,linux,macos,python,windows,android,intellij+all,androidstudio

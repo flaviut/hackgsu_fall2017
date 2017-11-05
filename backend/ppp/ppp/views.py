@@ -45,7 +45,23 @@ def add_info():
     return "Data inserted"
 @app.route('/load')
 def index():
-   return json.dumps(myToilets)
+    con = sql.connect('test.db')
+    con.row_factory = sql.Row
+    c = con.cursor()
+    c.execute('SELECT * FROM Toilets WHERE date("now","unixtime") - ts <= 300')
+    rows = c.fetchall()
+    results = []
+    for row in rows:
+        results.append(tuple(row))
+    try:
+        dbSize = c.execute('SELECT max(id) FROM Toilets').fetchall()[0][0]
+    except:
+        print("The database isn't populated!")
+    if (len(results) < 8 and dbSize > 8):
+        rows = c.execute('SELECT * FROM Toilets WHERE id < max(id) - ? AND id > max(id) - 8').fetchall()
+        for row in rows:
+            results.append(tuple(row))
+    return json.dumps(results)
 @app.after_request
 def apply_cors(response):
 	response.headers["Access-Control-Allow-Origin"] = "*"
