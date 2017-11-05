@@ -25,7 +25,13 @@ class App extends React.Component {
       fetch('http://54.211.92.19:5000/load').then((resp) => {
         return resp.json();
       }).then((json) => {
-        this.setState({toiletList: json.toilets});
+        let toiletList = [];
+        Object.entries(json).forEach((entry) => {
+          const k = entry[0];
+          const v = entry[1];
+          toiletList[k - 1] = v;
+        });
+        this.setState({toiletList: toiletList});
       });
   }
 
@@ -39,7 +45,7 @@ class App extends React.Component {
         return;
       }
 
-      if(previousValue.action === 'close' && val.action === 'close') {
+      if(previousValue[3] === 'close' && val[3] === 'close') {
         // two closes in a row with no lock in the middle? there's an issue.
         abortedShits += 1;
       }
@@ -50,15 +56,18 @@ class App extends React.Component {
   }
 
   render() {
+    let entries = null;
+    if (this.state.toiletList != null) {
+      entries = this.state.toiletList.map((value, id) => (
+        <ToiletEntry toiletId={id+1}
+                     status={this.toiletIsClean(value)}
+                     key={id} />));
+    }
+
     return (<div>
       <h2 id="heading">Porta-Potty Statuses</h2>
       <ToiletEntries>
-        {this.state.toiletList ?
-          this.state.toiletList.map((value, id) => (
-            <ToiletEntry toiletId={value.toiletId}
-                         status={this.toiletIsClean(value)}
-                         key={id} />)) :
-          null}
+        {entries}
       </ToiletEntries>
     </div>);
   }
