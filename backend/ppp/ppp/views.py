@@ -12,12 +12,6 @@ myToilets = {"toilets":[{"id": "1", "toiletId": "1", "timestamp": "2017-11-01T11
                       {"id": "6", "toiletId": "6", "timestamp": "2017-11-02T15:04:36+00:00", "action": "open"},
                         {"id": "7", "toiletId": "7", "timestamp": "2017-11-02T17:06:36+00:00", "action": "closed"}]}
 
-@app.route('/what')
-def wha_t():
-    a = 0
-    for num in myToilets['toilets']:
-        a += 1
-    return str(a)
 @app.route('/database')
 def toilet_info():
     con = sql.connect('test.db')
@@ -37,14 +31,6 @@ def show_db_column():
     for row in rows:
         list.append(tuple(row))
     return json.dumps(list)
-@app.route('/getmax')
-def get_max():
-    con = sql.connect('test.db')
-    c = con.cursor()
-    c.execute('SELECT max(id) from Toilets')
-    num = c.fetchall()
-    num2 = num[0][0]
-    return str(num2)
 @app.route('/addinfo')
 def add_info():
     con = sql.connect('test.db')
