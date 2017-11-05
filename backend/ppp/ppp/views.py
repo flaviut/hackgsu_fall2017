@@ -13,16 +13,6 @@ myToilets = {"toilets":[{"id": "1", "toiletId": "1", "ts": "2017-11-01T11:40:20+
                       {"id": "6", "toiletId": "6", "ts": "2017-11-02T15:04:36+00:00", "action": "open"},
                         {"id": "7", "toiletId": "7", "ts": "2017-11-02T17:06:36+00:00", "action": "closed"}]}
 
-@app.route('/post')
-def post():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', "", type=str)
-    c = request.args.get('c', "", type=str)
-    con = sql.connect('test.db')
-    with con:
-        cur = con.cursor()
-        cur.execute('INSERT INTO Toilets (toiletId, ts, action) VALUES (?,?,?)', (a, b, c))
-    return "[" + str(a) + ", " + b + ", " + c + "]"
 @app.route('/database')
 def toilet_info():
     con = sql.connect('test.db')
@@ -54,6 +44,16 @@ def add_info():
             for num in myToilets['toilets']:
                 c.execute('INSERT INTO Toilets (ts, action) VALUES (?,?)', (num['ts'], num['action']))
     return "Data inserted"
+@app.route('/post')
+def post():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', "", type=str)
+    c = request.args.get('c', "", type=str)
+    con = sql.connect('test.db')
+    with con:
+        cur = con.cursor()
+        cur.execute('INSERT INTO Toilets (toiletId, ts, action) VALUES (?,?,?)', (a, b, c))
+    return "[" + str(a) + ", " + b + ", " + c + "]"
 @app.route('/load')
 def index():
     con = sql.connect('test.db')
