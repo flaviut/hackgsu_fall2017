@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "babel-core": "^5.3.3",
-    "babel-loader": "^5.0.0"
+    "babel-loader": "^5.0.0",
+    "react-bootstrap": "^0.31.5"
   }
 }

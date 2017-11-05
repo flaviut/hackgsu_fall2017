@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Table} from 'react-bootstrap';
+
 
 const ToiletEntries = (props) => {
   return (
@@ -11,15 +13,9 @@ const ToiletEntries = (props) => {
           <th>Status</th>
         </tr>
       </thead>
-      <tbody>
-        {props.toiletEntries}
-      </tbody>
+      <tbody>{props.children}</tbody>
     </Table>
   );
-};
-
-ToiletEntries.propTypes = {
-    toiletEntries: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
 export default ToiletEntries;
