@@ -74,22 +74,20 @@ def index():
         WHERE datetime('now', '-10 days') < datetime(ts)
         ORDER BY ts""")
     rows = c.fetchall()
-    results = []
+    results = {1: [], 2: [], 3: [], 4: [], 5: []}
     for row in rows:
-        results.append(tuple(row))
-    db_size = c.execute('SELECT max(id) FROM Toilets').fetchall()[0][0]
+        results[row[1]].append(tuple(row))
 
-    if len(results) < 8 and db_size > 8:
-        rows = c.execute("""
-            SELECT * FROM Toilets T1 WHERE T1.id IN (
-                SELECT T2.id FROM Toilets T2
-                WHERE T2.toiletId = T1.toiletId
-                ORDER BY T2.ts
-                LIMIT 8
-            )
-            ORDER BY T1.toiletId""").fetchall()
-        for row in rows:
-            results.append(tuple(row))
+    for toiletId, values in results.items():
+        if len(values) < 8:
+            rows = c.execute("""
+                SELECT * FROM Toilets WHERE toiletId = ?
+                ORDER BY ts""", toiletId).fetchall()
+            results[toiletId] = []
+            for row in rows:
+                results[row[1]].append(tuple(row))
+
+
     return json.dumps(results)
 
 
