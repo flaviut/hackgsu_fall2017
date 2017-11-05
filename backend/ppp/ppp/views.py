@@ -3,6 +3,7 @@ from ppp import app
 import json
 import sqlite3 as sql
 
+#sql statement that returns events that happened in the last 10 minutes
 #json thing
 myToilets = {"toilets":[{"id": "1", "toiletId": "1", "timestamp": "...", "action": "closed"},
                       {"id": "2", "toiletId": "2", "timestamp": "...", "action": "closed"},
@@ -57,6 +58,6 @@ def add_info():
             for num in myToilets['toilets']:
                 c.execute('INSERT INTO Toilets (timestamp, action) VALUES (?,?)', (num['timestamp'], num['action']))
     return "Data inserted"
-@app.route('/json')
+@app.route('/load')
 def index():
    return json.dumps(myToilets)
