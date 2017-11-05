@@ -61,8 +61,8 @@ def index():
     c = con.cursor()
     c.execute("""
         SELECT * FROM Toilets
-        WHERE datetime('now', '-10 days') < datetime(timestamp)
-        ORDER BY timestamp""")
+        WHERE datetime('now', '-10 days') < datetime(ts)
+        ORDER BY ts""")
     rows = c.fetchall()
     results = []
     for row in rows:
@@ -74,7 +74,7 @@ def index():
             SELECT * FROM Toilets T1 WHERE T1.id IN (
                 SELECT T2.id FROM Toilets T2
                 WHERE T2.toiletId = T1.toiletId
-                ORDER BY T2.timestamp
+                ORDER BY T2.ts
                 LIMIT 8
             )
             ORDER BY T1.toiletId""").fetchall()
