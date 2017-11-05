@@ -2,6 +2,7 @@ from ppp import app
 
 import json
 import sqlite3 as sql
+from flask import request
 
 #json thing
 myToilets = {"toilets":[{"id": "1", "toiletId": "1", "timestamp": "2017-11-01T11:40:20+00:00", "action": "closed"},
@@ -12,6 +13,16 @@ myToilets = {"toilets":[{"id": "1", "toiletId": "1", "timestamp": "2017-11-01T11
                       {"id": "6", "toiletId": "6", "timestamp": "2017-11-02T15:04:36+00:00", "action": "open"},
                         {"id": "7", "toiletId": "7", "timestamp": "2017-11-02T17:06:36+00:00", "action": "closed"}]}
 
+@app.route('/post')
+def request():
+    a = request.args.get('a', 0, type=int)
+    b = request.args.get('b', "", type=string)
+    c = request.args.get('c', "", type=string)
+    con = sql.connect('test.db')
+    with con:
+        c = con.cursor()
+        c.execute('INSERT INTO Toilets (toiletId, timestamp, action) VALUES (?,?,?)', (a, b, c))
+        return "Posted"
 @app.route('/database')
 def toilet_info():
     con = sql.connect('test.db')
