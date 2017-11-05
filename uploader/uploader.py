@@ -1,8 +1,7 @@
 import select
-import serial
-import time
-
 import sys
+
+import serial
 
 from http_client import HttpClientThread
 from throttle import throttle
@@ -17,6 +16,7 @@ current_lock_state = None
 current_toilet = 1
 
 client = HttpClientThread()
+client.start()
 
 
 def update_server(event_type):
@@ -63,7 +63,7 @@ def handle_accelerometer(x, y, z):
 
 def handle_change_toilet():
     global current_toilet
-    if sys.stdin in select.select([sys.stdin], [], [], timeout=0):
+    if sys.stdin in select.select([sys.stdin], [], [], 0):
         current_toilet = int(sys.stdin.read(1))
         print('Changed toilet to ' + str(current_toilet))
 

@@ -44,16 +44,14 @@ def add_info():
             for num in myToilets['toilets']:
                 c.execute('INSERT INTO Toilets (ts, action) VALUES (?,?)', (num['ts'], num['action']))
     return "Data inserted"
-@app.route('/post')
+@app.route('/post', methods=['POST'])
 def post():
-    a = request.args.get('a', 0, type=int)
-    b = request.args.get('b', "", type=str)
-    c = request.args.get('c', "", type=str)
+    data = request.get_json()
     con = sql.connect('test.db')
     with con:
         cur = con.cursor()
-        cur.execute('INSERT INTO Toilets (toiletId, ts, action) VALUES (?,?,?)', (a, b, c))
-    return "[" + str(a) + ", " + b + ", " + c + "]"
+        cur.execute('INSERT INTO Toilets (toiletId, ts, action) VALUES (?,?,?)', (data['toiletId'], data['ts'], data['action']))
+    return data
 @app.route('/load')
 def index():
     con = sql.connect('test.db')

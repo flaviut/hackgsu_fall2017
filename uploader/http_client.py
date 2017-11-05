@@ -14,12 +14,12 @@ class HttpClientThread(Thread):
     def put_event(self, event_type, toilet_id):
         self._request_queue.put({
             'action': event_type,
-            'toilet': toilet_id,
-            'timestamp': datetime.now().isoformat()
+            'toiletId': toilet_id,
+            'ts': datetime.now().isoformat()
         })
 
     def run(self):
         while True:
             next_update = self._request_queue.get()
-            requests.post('http://54.211.92.19:5000/store/',
-                          next_update)
+            print(requests.post('http://54.211.92.19:5000/post',
+                                next_update).text)
