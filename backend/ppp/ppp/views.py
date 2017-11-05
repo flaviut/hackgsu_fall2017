@@ -59,17 +59,25 @@ def index():
     con = sql.connect('test.db')
     con.row_factory = sql.Row
     c = con.cursor()
-    c.execute('SELECT * FROM Toilets WHERE date("now","unixtime") - ts <= 300')
+    c.execute("""
+        SELECT * FROM Toilets
+        WHERE datetime('now', '-10 days') < datetime(timestamp)
+        ORDER BY timestamp""")
     rows = c.fetchall()
     results = []
     for row in rows:
         results.append(tuple(row))
-    try:
-        dbSize = c.execute('SELECT max(id) FROM Toilets').fetchall()[0][0]
-    except:
-        print("The database isn't populated!")
-    if (len(results) < 8 and dbSize > 8):
-        rows = c.execute('SELECT * FROM Toilets WHERE id < max(id) - ? AND id > max(id) - 8').fetchall()
+    db_size = c.execute('SELECT max(id) FROM Toilets').fetchall()[0][0]
+
+    if len(results) < 8 and db_size > 8:
+        rows = c.execute("""
+            SELECT * FROM Toilets T1 WHERE T1.id IN (
+                SELECT T2.id FROM Toilets T2
+                WHERE T2.toiletId = T1.toiletId
+                ORDER BY T2.timestamp
+                LIMIT 8
+            )
+            ORDER BY T1.toiletId""").fetchall()
         for row in rows:
             results.append(tuple(row))
     return json.dumps(results)
