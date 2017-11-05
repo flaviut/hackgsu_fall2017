@@ -72,7 +72,7 @@ def index():
     c.execute("""
         SELECT * FROM Toilets
         WHERE datetime('now', '-10 days') < datetime(ts)
-        ORDER BY ts""")
+        ORDER BY ts DESC""")
     rows = c.fetchall()
     results = {1: [], 2: [], 3: [], 4: [], 5: []}
     for row in rows:
@@ -82,7 +82,7 @@ def index():
         if len(values) < 8:
             rows = c.execute("""
                 SELECT * FROM Toilets WHERE toiletId = ?
-                ORDER BY ts""", (toiletId,)).fetchall()
+                ORDER BY ts DESC""", (toiletId,)).fetchall()
             results[toiletId] = []
             for row in rows:
                 results[row[1]].append(tuple(row))
