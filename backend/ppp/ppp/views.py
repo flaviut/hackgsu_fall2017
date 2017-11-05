@@ -46,7 +46,7 @@ def add_info():
     return "Data inserted"
 @app.route('/post', methods=['POST'])
 def post():
-    data = request.get_json()
+    data = request.get_json(force=True)
     con = sql.connect('test.db')
     with con:
         cur = con.cursor()
