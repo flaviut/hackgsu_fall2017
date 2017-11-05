@@ -4,6 +4,7 @@ import time
 
 import sys
 
+from http_client import HttpClientThread
 from throttle import throttle
 
 JERK_THRESHOLD = .5  # this seems to work well
@@ -15,10 +16,17 @@ current_lock_state = None
 
 current_toilet = 1
 
+client = HttpClientThread()
+
+
+def update_server(event_type):
+    client.put_event(event_type, current_toilet)
+
 
 @throttle(seconds=2)
 def handle_door_closed():
     print('CLOSED')
+    update_server('closed')
 
 
 def handle_lock(pot):
@@ -27,9 +35,11 @@ def handle_lock(pot):
     if scaled_pot > .83 and (current_lock_state == 'locked' or current_lock_state is None):
         current_lock_state = 'unlocked'
         print('UNLOCKED')
+        update_server('unlocked')
     if scaled_pot < .45 and (current_lock_state == 'unlocked' or current_lock_state is None):
         current_lock_state = 'locked'
         print('LOCKED')
+        update_server('locked')
 
 
 def handle_accelerometer(x, y, z):
@@ -55,7 +65,7 @@ def handle_change_toilet():
     global current_toilet
     if sys.stdin in select.select([sys.stdin], [], [], timeout=0):
         current_toilet = int(sys.stdin.read(1))
-        print('Changed toilet to ' + current_toilet)
+        print('Changed toilet to ' + str(current_toilet))
 
 
 def main():
