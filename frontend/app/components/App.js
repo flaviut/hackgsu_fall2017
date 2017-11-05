@@ -2,14 +2,39 @@ import React from 'react';
 
 import ToiletEntry from './ToiletEntry';
 
-const App = () => {
-  return (<div>
-    <h2 id="heading">Hello ReactJS</h2>
-    <ToiletEntry toiletId={1} status="clean" />
-    <ToiletEntry toiletId={2} status="dirty" />
-    <ToiletEntry toiletId={3} status="clean" />
-    <ToiletEntry toiletId={4} status="clean" />
-  </div>);
-};
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {toiletList: getToiletEntries()};
+  }
 
-export default App;
+  render() {
+    return (<div>
+      <h2 id="heading">Porta-Potty Statuses</h2>
+      {this.state.toiletList.map((id, status) => (
+        <ToiletEntry toiletId={id} status={status} key={id} />
+      ))}
+    </div>);
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(
+      () => this.getToiletEntries(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  getToiletEntries() {
+    this.setState({
+      toiletList: fetch('/load').then(function(resp) {
+        return resp.json()
+      }).then(function(data) {
+        return data.toilets;
+      })
+    });
+  }
+};

@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const ToiletEntry = (props) => {
+const ToiletEntries = (props) => {
   return (
     <Table>
       <thead>
         <tr>
-          <th>#</th>
+          <th>Toilet #</th>
           <th>Status</th>
         </tr>
       </thead>
@@ -18,8 +18,8 @@ const ToiletEntry = (props) => {
   );
 };
 
-ToiletEntry.propTypes = {
+ToiletEntries.propTypes = {
     toiletEntries: PropTypes.arrayOf(PropTypes.node).isRequired,
 };
 
-export default ToiletEntry;
+export default ToiletEntries;
