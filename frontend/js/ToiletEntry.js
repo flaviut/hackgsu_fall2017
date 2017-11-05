@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const ToiletEntry = (props) => {
   return (
     <tr style={{ backgroundColor: props.status === 'clean' ? '#568203' : '#DC143C' }}>
-      <tc>{props.toiletId}</tc><tc>{props.status}</tc>
+      <tc>Toilet {props.toiletId}</tc><tc>{props.status}</tc>
     </tr>);
 };
 
