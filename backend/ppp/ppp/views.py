@@ -19,7 +19,7 @@ def toilet_info():
     with con:
         c = con.cursor()
         c.execute("CREATE TABLE IF NOT EXISTS Toilets(id INTEGER PRIMARY KEY,toiletId INTEGER, ts TEXT, action TEXT)")
-        c.execute('DROP TABLE IF EXISTS Toilets')
+        # c.execute('DROP TABLE IF EXISTS Toilets')
     return "Success"
 @app.route('/showdbcolumn')
 def show_db_column():
